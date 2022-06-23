@@ -16,10 +16,8 @@ código de preferencia.
 (Siga los pasos en la página de React Native para configurar su entorno de trabajo).
 Conecte un dispositivo a su pc o utilice un emulador.
 En Consola, navegue hasta el directorio de su proyecto y una vez ahí:
---- Ejecute: 'npm install'
----- Luego ejecute: 'npx react-native run-android'
+-- Ejecute: 'npm install'
+-- Luego ejecute: 'npx react-native run-android'
+
 Con esto ya podrá ver la aplicación en pantalla.
 
-
-- Dónde pueden recibir ayuda los usuarios con tu proyecto
-- Quién mantiene y contribuye con el proyecto.
