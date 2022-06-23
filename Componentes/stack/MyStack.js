@@ -1,12 +1,13 @@
 
 import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+
 
 import SplashScreen from 'react-native-splash-screen';
 
 import HomeScreen from './HomeScreen';
 import DetailScreen from './DetailScreen';
 
-import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
