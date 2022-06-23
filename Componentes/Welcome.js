@@ -17,7 +17,7 @@ import {useNavigation} from '@react-navigation/native';
   constructor(props) {
     super(props);
     this.state = {
-      MyToken: null,
+      MyToken: null, //
   };
 
     try{
