@@ -1,0 +1,1540 @@
+
+
+
+----- Guía de instalación del Framework React Native y las dependencias
+        necesarias para el funcionamiento de la aplicación ---
+
+** NOTA: La configuración de las dependencias será exclusiva para ANDROID
+         en esta guía. Se nececitará de otra para configurar las dependencias para iOS.
+
+https://reactnative.dev/docs/environment-setup
+
+ ** Nota: La siguiente documentación es para dispositivos windows, pero hay un dato importante que ver ahí
+           acerca de los pasos para crear un nuevo proyecto, cuando ya hay una versión instalada de RN previa
+        https://microsoft.github.io/react-native-windows/docs/getting-started
+
+
+Vamos a utilizar react-native init para hacer nuestra aplicación React Native. 
+Suponiendo que tenemos un Node instalado, se puede usar npm para instalar 
+la utilidad de línea de comandos react-native-cli. 
+
+Abrir la terminal e ir 
+al espacio de trabajo, y ejecutar:
+
+> npm install -g react-native-cli # Leer nota primero
+Nota: es para instalar el CLI de forma global, (Obviar este paso si ya se ha instalado antes un CLI)
+
+*** En nuestro proyecto iniciamos con la versión: react-native-cli: 2.0.1 
+
+
+Ejecutamos en la terminal los siguientes comandos para crear un nuevo proyecto React Native
+
+**Nota: No olvidar navegar hasta la ruta que se ha utilizado siempre, donde se encuentran
+     todos lo proyectos de RN creados antes, una vez ahí:
+
+> react-native init ProjectName  # Leer nota abajo antes
+
+Nota: en la documentación de React native pAra windows
+se encuentra la sieguiente recomendación:
+
+If you've installed react native globally in the past, via npm install -g react-native, 
+and are having issues with the new instructions, try adding --ignore-existing to your npx command:
+npx --ignore-existing react-native init <projectName> --template react-native@^0.63.2 instead.
+
+Por lo tanto podemos  ejecutar:
+
+> npx --ignore-existing react-native init AwsomeProject  #ProjectName es AwsomeProject
+
+Pero Si deseamos comenzar un nuevo proyecto con una versión específica de 
+React Native, podemos usar el argumento --version o hacer lo siguiente:
+
+> npx --ignore-existing react-native init <projectName> --template react-native@^0.63.2
+
+
+/////////////// IMPORTANTE /////////////////
+*** Nota: react-native init AwsomeProject --version 0.61.5 (era la versión de RN anterior)
+
+** Nota: La versión 0.60.5 da problemas de compatibilidad con android < 6
+   lo mejor es evitarla.
+///////////////////fin////////////////////
+
+___________________________________
+
+La versión de RN recomendada para esta guía es: 0.63.4
+
+_________________________________
+
+Si lo anterior tuvo éxito, proseguir....
+
+Ahora usando npm, vamos instalar todas las dependencias que utilizaremos
+para que el proyecto funcione en su totalidad; primero entramos 
+a nuestro proyecto recién creado:
+
+> cd AwsomeProject
+
+Una vez adentro, procedemos a instalar los paquetes:
+
+** Nota: Para saber qué versión de react-native tenemos instalada 
+      podemos ver el archivo package.json en la raiz del proyecto. La info 
+      se encuentra en la sección "dependencies":{ }
+
+     o podemos ejecutar en la consola, lo siguiente:
+
+> react-native -v  #(it is deprecated)
+> npm view react-native version  #(así es la nueva forma)
+
+Si queremos correr el proyecto recién creado antes de instalar todas las demás paqueterías,
+para efectos de probar que todo ande bien:
+
+> npx react-native run-android 
+ó
+> react-native run-android 
+
+** Nota: esto generalmente, instalará una versión de gradle más actualizada.
+** al final de esta guía se explica una forma completa para correr la
+    aplicación tanto conectado con cable usb como conectado con wifi
+
+/////////////// IMPORTANTE /////////////////
+
+Si una paquetería no se instala, por errores parecidos a éstos:
+
+#errores
+
+npm ERR! Unexpected end of JSON input while parsing near '....0","dependencies":{"'
+
+Entonces es necesario limpiar la cache, ejecutando:
+
+> npm cache clean --force
+
+O sino, limpiar todo el proyecto construido 
+a partir de 'run' o 'release':
+
+> cd Android
+> ./gradlew clean
+
+Fuente:
+https://github.com/colinbdclark/osc.js/issues/128
+
+
+/////////////////////////////////////
+
+
+** Nota: dado que ya está el proyecto, y solo se mueven todas las carpetas y archivos del viejo proyecto
+a este nuevo proyecto, lo más recomendable antes de mover esos archivos es:
+
+1)  instalar primero todas las paqueterías.
+
+2) hacer run-android (o sea correr el proyecto) al instalar tres o cuatro paqueterías de un solo
+      e ir limpiado el proyecto a medida que se van instalando y configurando paqueterías complejas
+      ejecutando:
+
+> cd Android
+> ./gradlew clean
+> cd..
+> npm cache clean --force
+
+3) verficar que se hayan instalado correctamente y que la app no se cierre, haciendo run-android
+      luego de haber instalado y configurado TODAS las paqueterías aquí descritas.
+
+
+
+¡Comencemos a instalar las paqueterías!
+
+---------------------------- 1 -----------------------------
+
+
+Para la navegación entre ventanas (o activities):
+
+> npm install @react-navigation/native
+
+** Not need link
+****versión actual: + @react-navigation/native@5.9.3
+
+
+Para utilizar los gestos, como deslizar el men� lateral.
+Instalar el conjunto de paquetes siguiente:
+
+> npm install react-native-reanimated react-native-gesture-handler react-native-screens@3.2.0 react-native-safe-area-context @react-native-community/masked-view
+
+
+
+Nota0: react-native-reanimated, descarga y configura automáticamente 
+        otras paqueterias algo pesadas al hacer run-android.
+
+**Nota1: en versiones anteriores de react native, la dependencia react-native-gesture-handler 
+parecía sólo funcionar 
+          si se instalaba específicamente la versión @1.5.3, pero ahora ya no hay problemas con las
+           las nuesvas versiones. Ahora la que parece dar problemas es la nueva de native-screens,
+           por eso lo mejor es instalar una específica, la @3.2.0.	
+
+** Nota2: en proyectos >= a version 0.61.2  no se debe linkear
+
+
+
+**** versiones actuales:
+
+     + react-native-gesture-handler@1.10.3
+     + react-native-screens@3.2.0
+     + @react-native-community/masked-view@0.1.10
+     + react-native-safe-area-context@3.2.0
+     + react-native-reanimated@2.0.0
+
+
+
+
+Para finalizar la instalación de react-native-gesture-handler, agregue lo 
+siguiente en la parte superior (asegúrese de que esté en la parte superior y 
+no haya nada más antes) de su archivo de entrada, como index.js o App.js:
+
+( para este proyecto, esto irá en el archivo index.js)
+
+> import 'react-native-gesture-handler';
+
+Ahora, debe envolver toda la aplicación en un Navigation Container. Por lo 
+general, haría esto en su archivo de entrada, como index.js o App.js:
+
+( esto sólo es un ejemplo, de lo que va en App.js. No copiar)
+
+    import 'react-native-gesture-handler'; // Ojo con esto, debe ir aquí
+    import * as React from 'react';
+    import { NavigationContainer } from '@react-navigation/native';
+
+      export default function App() {
+      return (
+          <NavigationContainer>{/* Rest of your app code */}</NavigationContainer>
+      );
+    }
+
+
+documentación: 
+https://reactnavigation.org/
+https://reactnavigation.org/docs/getting-started/
+
+
+
+** Nota: A partir de la versión 0.61.2 de react native, se deben instalar otros módulos
+aparte de react-navigation/native, los cuales son:
+
+-------------------- 1.0.1 -----------------
+
+> npm install react-native-screens @react-navigation/native # ejecutar aún si esto parece repetición 
+
+** Not need link⁫
+****versiones actuales: 
++ react-native-screens@2.18.1
++ @react-navigation/native@5.9.3
+
+------------------- 1.0.2 ---------------------
+
+> npm install @react-navigation/compat @react-navigation/stack
+
+** Not need link⁫
+****versiones actuales: 
++ @react-navigation/compat@5.3.14
++ @react-navigation/stack@5.14.3
+
+-------------------- 1.0.3 -----------------
+
+> npm install @react-navigation/bottom-tabs
+
+** Not need link⁫
+****versión actual: + @react-navigation/bottom-tabs@5.11.8
+
+** Nota: Algo muy importante que debe tomarse en cuenta al utilizar este tab,
+        es que en Android, cuando se muestra el teclado, la barra de pestañas 
+         inferior se eleva por encima del teclado. Para solucionar ese problema, 
+         cambie lo siguiente en el AndroidManifest.xml en la parte de la activity principal:
+         sustituya:    android:windowSoftInputMode="adjustResize"
+         por:            android:windowSoftInputMode="adjustPan"
+  
+url de resolución de ese error en github, por un usuario llamado vshjxyz:
+https://github.com/react-navigation/react-navigation/issues/6700
+
+
+-------------------- 1.0.4 -----------------
+
+> npm install @react-navigation/drawer 
+
+** Not need link⁫
+****versión actual: + @react-navigation/drawer@5.12.4
+
+
+
+** Aquí están las documentaciones respectivas:
+
+https://reactnavigation.org/docs/native-stack-navigator/
+https://reactnavigation.org/docs/compatibility/
+
+https://reactnavigation.org/docs/tab-based-navigation/
+
+https://reactnavigation.org/docs/drawer-based-navigation/
+
+
+
+-----------------2---------------------
+
+Para utilizar los iconos de base nativa a nivel global (alternativa 1):
+
+> npm install native-base --save
+
+> react-native link (no necesario en versiones >= 0.61.2)
+****versión actual: + native-base@2.15.2
+
+
+
+----------------3----------------------
+
+Para utilizar los íconos básicos a nivel global (alternativa 2): 
+
+> npm install --save react-native-vector-icons
+
+*** Editamos android/app/build.gradle ( NO android/build.gradle ) y 
+  añadimos lo siguiente:
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+
+****versión actual: + react-native-vector-icons@8.1.0
+
+-----------------------4--------------------------
+
+(ya no instalar)
+
+Para usar iconos con material desing en la barra de menú inferior:
+
+> npm install react-native react-navigation-material-bottom-tabs react-native-paper
+
+** not need link
+
+****versión actual: 
++ react-native@0.61.5
++ react-navigation-material-bottom-tabs@2.1.5
++ react-native-paper@4.7.2
+
+---------------------5------------------------- 
+
+para que las imágenes sean responsives:
+
+> npm install react-native-scalable-image --save
+
+** not need link
+****versión actual: + react-native-scalable-image@1.1.0
+
+
+--------------------6--------------------------
+
+Para usar la cámara de android, con el fin de leer código QR:
+
+> npm install react-native-camera-kit@10.0.0 --save
+
+** Nota: al parecer las versiones superiores a 10.0.0 dan errores en este proyecto.
+
+> react-native link react-native-camera-kit #(no para react-native >= -v 0.61.2)
+****versión actual: + react-native-camera-kit@10.0.0
+
+** Agreguamos los siguientes permisos en nuestro AndroidMnifest.xml. Vamos
+ a TuristApp -> android -> app -> src -> main -> AndroidMnifest.xml 
+ y añadimos:
+
+<uses-permission android:name="android.permission.CAMERA"/>
+
+
+
+------------------------ 7 -------------------
+
+(ya no instalar)
+Para acceder a la aplicación propia de llamada del teléfono.
+justamente para la parte de números de emergencias.
+
+> npm install react-native-phone-call --save
+
+** not need link 
+****versión actual:  + react-native-phone-call@1.0.9
+
+
+--------------------- 8.1 ---------------------------
+
+Para usar mapas de google:
+
+> npm install react-native-maps --save
+
+La versión actual es: 
++ react-native-maps@0.27.1
+
+
+Agregamos lo siguiente en el archivo AndroidManifest.xml:
+
+<meta-data
+  android:name="com.google.android.geo.API_KEY"
+  android:value="Replace this with your API key"/>
+
+  <!-- You will also only need to add this uses-libray tag -->
+   <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+
+
+Esto sí es importante, y debe ir siempre en android/build.gradle:
+
+buildscript {
+    ext {
+   ...
+  playServicesVersion = "17.0.0" // or find latest version
+  firebaseVersion = "17.3.4"
+   }
+}
+
+y hay que agregar otro maven, siempre en android/build.gradle:
+
+   maven { //todo: Agregado por mí ------------
+            url 'https://maven.google.com/'
+        }
+
+Nota importante, de un comentario del foro de github:
+
+Intenté ejecutar react-native run-android 5-6 veces consecutivas. 
+Cada vez fue más y más, hasta que finalmente superó todas las tareas 
+relacionadas react-native-maps. Es un poco molesto tener que hacer esto 
+como solución ... (A veces la solución, no  es esta, sino limpiar el gradle, así:)
+
+cd android 
+./gradlew clean 
+cd ..
+npx react-native run-android
+
+
+Link de guía:
+https://aboutreact.com/react-native-map-example/
+y:
+https://github.com/react-native-community/react-native-maps/pull/3106/files
+y:
+https://www.npmjs.com/package/react-native-maps
+solución de un error:
+https://github.com/react-native-maps/react-native-maps/issues/880
+
+------------------------ 8.2 ----------------------- 
+
+(EN lugar de este apartado, pasarlo por alto, porque se tratará mejor 
+    más adelante en el apartado #44)
+
+Para usar geolocalización:
+Para obtener la ubicación actual Latitud y longitud del dispositivo.
+
+Para usar Geolocation necesitamos instalar 
+la dependencia @react-native-community/geolocation:
+
+> npm install @react-native-community/geolocation --save
+
+
+Permiso para usar la Geolocalización para Android.
+
+Estamos utilizando una API de ubicación nativa, 
+por lo que debemos agregar algunos permisos 
+al archivo AndroidManifest.xml. Vamos a agregar 
+los siguientes permisos en AndroidMnifest.xml:
+
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+------------------------- 9 -----------------------------
+
+
+Carrucel de imágenes
+
+> npm install react-native-carousel-view
+
+****versión actual:  + react-native-carousel-view@0.5.1
+
+Enlace:
+https://github.com/chilijung/react-native-carousel-view
+
+para que funcione correctamente:
+
+- Instalar y vincular automáticamente:
+
+> npm i @react-native-community/viewpager 
+
+****versión actual: + @react-native-community/viewpager@5.0.11
+
+***para versiones más recientes de reat-native la vinculación es automática
+
+- luego, Si intenta correr:
+ > npx react-native run-android 
+dará error.
+
+Entonces primero:
+
+Diríjase a la ruta:
+node_modules\react-native-carousel-view\src\carouselPager.android.js
+y elimine la importación ViewPagerAndroid de 'react-native' 
+y la agrega de la siguiente manera  
+import ViewPager from "@react-native-community/viewpager";
+
+y luego  reemplazamos lo siguiente:
+(en la línea 22 aprox.) 
+
+viewPager: ViewPagerAndroid 
+por
+ viewPager: ViewPager
+
+Y luego:
+(en la línea 78 y 88 aprox.) 
+
+<ViewPagerAndroid> 
+por 
+<ViewPager>
+
+(incluir la de cierre </ViewPager> ) 
+
+Sólo así funcionará correctamente, y no importa si vs-code 
+reconoce todo ese código como error!
+
+
+---------------------------10  -----------------
+para el componente fecha, del formulario de registro:
+
+> npm install react-native-date-picker@2.7.6 --save # componente al estilo iPhone
+
+**Nota: instalar esa versión específica, ya que la versión @3.2.5, genera problemas.
+
+****versión actual: + react-native-date-picker@2.7.6
+
+(ya no instalar)
+> npm i react-native-datepicker # componente normal
+****versión actual: + react-native-datepicker@1.7.2
+
+(ya no instalar)
+> npm i react-native-modal-datetime-picker @react-native-community/datetimepicker
+****versión actual: + react-native-modal-datetime-picker@8.5.1
+
+--------------------------11 ------------
+
+No son tan necesarias ya para este ejemplo, pero sí se debe instalar
+linear-gradient porque se usa como complemento para el efecto loading listView
+junto con otra descrita en el apartado 25
+
+
+Botón especial:
+(ya no instalar este)
+> npm install --save react-native-really-awesome-button
+
+*** versión instalada: + react-native-really-awesome-button@1.6.0
+
+
+este sí es necesario instalarlo:
+
+> npm i --save react-native-linear-gradient
+
+*** versión instalada: + react-native-linear-gradient@2.5.6
+
+------------------------ 12  OJO ------------------
+ventana modal (para el genero):
+
+Opción 1:
+(ya no instalar este)
+> npm install --save react-native-modal-select-option
+
+*** versión instalada: + react-native-modal-select-option@0.0.7
+
+link: https://github.com/theredfoxfire/react-native-dropdown-modal
+
+Opción 2:
+
+Muy importante, en el formulario de registro, es para país y género
+
+> npm i react-native-modal-selector --save
+
+*** versión instalada: + react-native-modal-selector@2.0.3
+
+link: https://www.npmjs.com/package/react-native-modal-selector
+
+
+--------------------- 13 ------------------------
+
+
+beautifully animated loader in React Native 
+Es para animaciones que se muestran al momento de obtener 
+respuestas del fetch response, en varias pantallas:
+
+> npm i --save lottie-react-native
+
+*** versión instalada: + lottie-react-native@3.5.0 
+
+link: https://github.com/react-native-community/lottie-react-native
+
+**Nota: por errores merge, agregar lo siguiente en android/app/build.gradle
+
+buildTypes {
+debug {
+	...
+        multiDexEnabled true
+    }
+    release {
+            ....
+        multiDexEnabled true
+    }
+}
+
+-------------------------- 14 -----------------
+
+Usando NetInfo para obtener información de
+si hay conexión a internet o no.
+
+> npm i @react-native-community/netinfo
+
+*** versión instalada: + @react-native-community/netinfo@6.0.0
+
+** Nota: añadir los permisos en el AndroidManifest.xml. 
+      La ruta es: Android/app/src/main/AndroidManifest.xml:
+
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+
+link de npm: https://www.npmjs.com/package/@react-native-community/netinfo
+
+link de ejemplo1: https://aboutreact.com/react-native-netinfo/
+
+link de ejemplo2: https://www.skptricks.com/2019/08/react-native-netinfo-example-to-detect-internet-connection.html
+
+
+Ojo: si se produce el siguiente error:
+
+TypeError: undefined is not an object (evaluating '_netinfo.default.isConnected.addEventListener')
+
+entonces ver esta info: 
+https://www.gitmemory.com/issue/react-native-community/react-native-netinfo/279/570782836
+
+
+------------------- 15 ---------------------
+
+Para Usar una Ventana Modal sin tener que usar el Modal component que viene
+por default en la paquería de react-native (usado para la fecha de nac. en el formulario) :
+
+ > npm i react-native-modal
+
+*** versión instalada: + react-native-modal@11.7.0
+
+
+
+Para calcular las dimeciones de ciertos dispositivos ya que
+por default no se calculan:
+
+(ya no instalar)
+> npm install react-native-extra-dimensions-android --save
+
+
+*** versión instalada: + react-native-extra-dimensions-android@1.2.5
+
+Link: https://www.npmjs.com/package/react-native-modal
+
+
+------------------------- 16 ----------------------------
+
+Para el compenente Nacionalidad
+
+
+Opción 1
+(ya no instalar opcion1)
+
+> npm i react-native-country-picker-modal
+
+*** versión instalada: + react-native-country-picker-modal@1.10.0
+
+
+------ (analizar este paquete).. ------
+* Nota: instalar esto también 
+
+> npm install --save react-native-device-info
+
+*** versión instalada: + react-native-device-info@5.5.3
+---------------
+
+
+Opción 2:
+(ya no instalar opcion2)
+
+> npm install react-native-country-code-list --save 
+
+*** versión instalada: + react-native-country-code-list@1.1.2
+
+
+Opción 3:
+(ya no instalar opcion3)
+> npm install --save react-native-countries
+
+*** versión instalada: + react-native-countries@1.0.3
+
+***Nota: esta paquetería descarga datos extra, pero es muy buena
+
+Link: https://github.com/talut/react-native-countries
+
+
+
+------------------------- 17 --------------------------
+(ya no instalar)
+
+Para las llamadas HTTP utilizaremos el cliente Axios (aunque también usamos
+el Fecth) 
+
+Nota: Considerar NO instalarlo ya que no se está usando
+
+> npm install axios --save
+
+*** versión instalada: + axios@0.19.2
+
+Si da un error del tipo 
+
+Task :app:transformDexArchiveWithDexMergerForDebug FAILED
+
+entonces hay que limpiar la cache (como se indica arriba)
+
+y agregar multiDexEnabled dentro de "android > app > build.gradle":
+
+buildTypes {
+debug {
+
+        multiDexEnabled true
+    }
+    release {
+        
+        multiDexEnabled true
+    }
+}
+
+Documentación del error:
+https://github.com/facebook/react-native/issues/26484
+
+
+
+------------------------------------ 17.1----------------
+
+Además Utilizaremos una biblioteca  de pantalla giratoria (Spinner)
+completa para simular el estado 'cargando...'
+
+> npm install react-native-loading-spinner-overlay --save
+
+*** versión instalada: + react-native-loading-spinner-overlay@2.0.0
+
+
+
+------------------------ 18 -------------------------
+
+Toast para Android y para iOS
+
+**Opción 1: (No se usa)
+
+> npm i react-native-easy-toast --save
+
+*** versión instalada: + react-native-easy-toast@1.2.0
+
+Documentación: https://github.com/crazycodeboy/react-native-easy-toast
+
+** Opción 2:
+     Sí es necesario, para notificar cambios en la red 
+> npm i react-native-tiny-toast --save
+
+*** versión instalada: + react-native-tiny-toast@1.0.7
+
+Documentación: https://reactnativeexample.com/react-native-toast-like-component-works-on-ios-and-android/
+
+
+--------------- 19 --------------------------
+
+> npm install react-native-splash-screen --save
+
+*** versión instalada: + react-native-splash-screen@3.2.0
+
+**¡Importante!: Para configurar esto se debe seguir la extensa
+guía descrita en el link de la Documentación abajo proporcionada
+
+PERO SÍ SE PUEDE INSTALAR LA DEPENDENCIA, Y DEJAR EL 
+PROCESO PARA DESPUÉS, INCLUSO PARA DESPUÉS DE HABER
+CORRIDO LA APP FINAL
+
+Documentación: https://medium.com/@appstud/add-a-splash-screen-to-a-react-native-app-810492e773f9
+
+Es tan importante esta documentación, que se guardó la página en pdf y tmabién el html, 
+bajo  el nombre:
+    Proceso para crear el splash screen --- PDF  y HTML -- files
+Dichos archivos se encuatran ( en el directorio local, de mi laptop)  en la carpeta:
+    proyectos-react-native
+
+¡También se guardó en la cuenta de Evernote!
+
+
+
+----------------- 20 ------------------- not for himnario
+Para la búsqueda implementada dentro de la pantalla del Traductor
+se instalará una versión deprecated de 'listView'.
+
+
+> npm i --save deprecated-react-native-listview
+
+**Versión instalada: + deprecated-react-native-listview@0.0.7
+
+----------------------- 21 ------------
+
+Uso de Redux para manejar los estados de forma global
+
+> npm install --save redux
+
+**Versión instalada: + redux@4.0.5
+
+Paquetes Complementarios.
+Lo más probable es que también necesitemos los enlaces React y 
+las herramientas de desarrollador:
+
+> npm install --save react-redux
+**Versión instalada: + react-redux@7.2.2
+
+> npm install --save-dev redux-devtools
+**Versión instalada: + redux-devtools@3.7.0
+
+
+------------- 22 -------------
+
+      (no es tan necesaria. Considerar no instalar)
+Para usarse como complemento de Axios
+> npm i query-string
+**Versión:  + query-string@6.13.1
+
+
+--------- 23-----------------
+   
+Originalmente esto era para usar unos iconos de un ejemplo de flatlist
+en el que se ve lo que ocurre cuando un ítem ya está cliqueado,
+Pero terminó siendo utilizado en la pantalla de Politicas y Términos
+para colocar un botón "cerrar".
+
+instalar:
+
+> npm install react-native-elements
+
+**Versión:  + react-native-elements@3.3.0
+*Nota: La versión instalada en el proyecto anterior a este, pues era alfa.1
+
+------------- 24 --------------
+
+(ya no instalar)
+
+Instalar el componente TextInput que permite 
+   mostrar u ocultar a la perfección los caracteres digitados dentro:
+
+> npm install --save react-native-hide-show-password-input
+
+    *** Version instalada: + react-native-hide-show-password-input@1.1.0
+
+ * Nota: Este paquete generalente tarda un mundo en instalarse
+
+* Nota: Antes de instalarlo  siempre es recomendable limpiar
+el proyecto, para ello hacemos lo siguiente:
+
+> cd Android
+> cd ./gradlew clean
+> cd..
+> npm cache clean --force
+
+
+---------------25 ----------------
+
+Esto sirve para el efecto loading listView o dicho de manera 
+correcta: el efecto shimmer placeholder.
+
+> npm i react-native-shimmer-placeholder --save
+
+    *** Version instalada: + react-native-shimmer-placeholder@2.0.7
+
+---------------- 26 (OJO)  ------------------------------ not for himnario
+Nota: sólo se usa en la parte de eventos y en itinerario,
+pero se puede presindir de él usando el anterior visor
+el cual ya se ha perfeccionado
+
+Otro visor de imágenes con características similares
+a las del anterior
+
+> npm install react-native-looped-carousel --save
+
+*** Version instalada: + react-native-looped-carousel@0.1.13
+
+------------------- 27 ------------------------------
+(ya no instalar)
+Dado que el flatList que trae react native por default se vuelve
+demasiado lento cuando el número de elementos sobrepasa los 7,
+aparece esta alternativa para hacer la lista más eficiente:
+
+> npm install --save recyclerlistview
+
+*** Version instalada: + recyclerlistview@3.0.0
+
+-------------------------- 28 ----------------
+
+Botón deslizante para el area de Contáctenos
+
+> npm install rn-swipe-button --save
+
+*** Version instalada: + rn-swipe-button@1.3.3
+
+--------------------------- 29 ---------------------
+
+Botón circular, siempre  para el area de Contáctenos
+Pero para el apartado de Redes Sociales
+
+>  npm install react-native-circle-button
+
+*** Version instalada: + react-native-circle-button@1.0.9
+
+*Nota: ****
+
+Dado  que este paquete trae sus propios iconos de prueba,
+es necesario agregarle los iconos personalizados de redes sociales
+que se encuentran en la carpeta general de assets>prueba ( del viejo proyecto AwsomeProject)
+
+Se encuentra varios iconos, pero se deben copiar 
+solo 3 (si deseamos utilizarlos): Facebook, whatsapp e instagram 
+
+Ahora, vamos al directorio siguiente:
+ node_modules -> react-native-circle-button->src->images
+Y una vez allí, pegamos los 3 íconos png copiados del proyecto.
+
+Hecho lo anterior, siempre en el directorio donde pegamos las imagenes,
+abrimos el archivo llamado main.js y configuramos los imports de modo que 
+queden de la siguiente manera:
+
+import iconAdd from './images/add.png'; //* default
+import iconFacebook1 from './images/facebook.png';  //* top
+import iconInstagram from './images/instagram.png'; //* left
+import iconFacebook2 from './images/facebook.png';  //* bottom
+import iconWhatsapp from './images/whatsapp.png';   //* right
+
+Y en el método de abajo, siempre en main.js sustituir para los nombres:
+
+CircleButton.defaultProps = {
+   ...
+  iconButtonCenter: iconAdd,
+  iconButtonTop: iconFacebook1,
+  iconButtonRight: iconWhatsapp,
+  iconButtonBottom: iconFacebook2,
+  iconButtonLeft: iconInstagram,
+  ....
+}
+
+Deben ser dos iconos de facebook porque la UT tiene dos
+FanPage
+
+---------------------- 30 -------------------------- 
+
+Un componente Accordion para desplegar texto.
+Generalmente es usado para los Términos y condiciones
+y las Políticas de Privacidad en el "acerca"
+
+> npm install --save react-native-collapsible  
+
+*** Version instalada: + react-native-collapsible@1.5.3
+
+Para combinar el componente anterior con el componente animatable:
+
+> npm install react-native-animatable --save
+
+*** Version instalada: + react-native-animatable@1.3.3
+
+----------------------- 31 -------------------------------
+(ya no instalar)
+Para un fondo de pantalla difuminado en la pantalla de bienvenidos
+
+> npm install @react-native-community/blur --save
+
+*** Version instalada: + @react-native-community/blur@3.6.0
+
+---------------------------- 32 -------------------------
+
+Para reproducir videos ( usado para el background del Home)
+
+> npm i react-native-video styled-components --save
+
+**Nota: son dos, por lo que va el espacio entre uno y otro componente
+
+*** Versiones instaladas:
++ react-native-video@5.1.1
++ styled-components@5.2.1
+
+
+
+----------------------- 33 ----------------------------- # Continuar Aquí
+
+Intro Slider usando AppIntroSlider, como un tutorial
+guía de inicio.
+
+> npm install react-native-app-intro-slider --save
+
+*** Version instalada: + react-native-app-intro-slider@4.0.4
+
+También instalar otra paquetería a usar: ionicos
+
+
+> npm install react-native-ionicons --save
+
+Nota: aunque react-native usa autolink, esta sí se debe linkear:
+
+*** Version instalada: + react-native-ionicons@4.6.5
+
+
+
+---------------------- 34 ----------------
+(ya no instalar)
+un complemtento para  el cuadro de búsqueda de Eventos:
+
+> npm i lodash.filter --save
+
+*** Version instalada: + lodash.filter@4.6.0
+
+
+-------------------- 35 --------------------
+
+Usando declaraciones console.log (consideraciones)
+
+Cuando se ejecuta una aplicación empaquetada, estas declaraciones pueden causar un gran 
+cuello de botella en el hilo de JavaScript. Esto incluye llamadas de bibliotecas de 
+depuración como redux-logger, así que asegúrese de eliminarlas antes de empaquetar. 
+También puede utilizar este complemento de babel que elimina todas las llamadas console.* 
+Primero debe instalarlo:
+
+> npm install babel-plugin-transform-remove-console --save-dev
+
+*** Version instalada:  + babel-plugin-transform-remove-console@6.9.4
+
+ahora cree un archivo con el nombre de .babelrc (así con un punto al inicio),
+crearlo en la raíz del proyecto... o sea donde se encuentra index.js, App.js, etc.
+
+Luego editar el archivo  .babelrc en el directorio de su proyecto de esta manera:
+
+    {   // este código fue agregado por mí, de una buena fuente
+        "env": {
+          "production": {
+            "plugins": ["transform-remove-console"]
+          }
+        }
+      }  // esto eliminará los console.log en la versión de lanzamiento
+
+Esto eliminará automáticamente todas las llamadas console.* en 
+las versiones de lanzamiento (producción) de su proyecto.
+
+
+
+------------------- 36 --------------------------
+
+Para implementar el modo oscuro 
+
+> npm install react-native-dark-mode
+
+*** Version instalada: + react-native-dark-mode@0.2.2
+
+** Debe agregar accesorio de <activity> llamado  |uiMode al android:configChanges 
+       en AndroidManifest.xml. Ejemplo:
+
+ <activity
+                ......
+     -        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+     +        android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+                ......  
+  />
+
+
+** La versión "react-native": "0.63.4", ya incluye "|uiMode"
+
+
+
+
+------------------ 37 ----------------------
+( No instalar)
+
+Para personalizar el Drawer Menu
+
+> npm install react-native-paper
+
+*** Version instalada: + react-native-paper@4.4.1
+
+
+
+
+------------ 38 ---------------
+
+(Ignorar esta sección 38, y pasar a la 39)
+
+instalando paqtería Firebase, para las notificaciones push
+
+> npm install --save react-native-firebase
+
+*** Version instalada:  + react-native-firebase@5.6.0
+
+Documentación:
+https://v5.rnfirebase.io/docs/v5.x.x/installation/initial-setup
+
+Nota: esta documentación es de una versión específica de firebase,
+dado que en un video instructivo de notificaciones push usa esa versión
+incluso,  cuando en el mismo video se indica que está deprecated tal versión.
+
+Url de vide: 
+https://www.youtube.com/watch?v=xyDTB06dHEA
+
+Link de solución de un erro de typescrip:
+https://stackoverflow.com/questions/48859169/js-types-can-only-be-used-in-a-ts-file-visual-studio-code-using-ts-check
+
+donde sugiere verificar o instalar extensioes para 
+(aunque en realidad ya están instaladas, solo es de desabilitarlas):
+
+1) Flow Language Support 
+
+2) @builtin TypeScript and JavaScript Language Features
+    
+Nota: 
+
+con la extensión << 1) >> verificamos que esté habilitada
+con la extención  << 2) >> se sugiere deshabilitarla para que funcione
+ lo siguiente:
+import type {  Notification, NotificationOpen } 'react-native-firebase';
+ubicado en un archivo js llamado FCMService.js
+
+Pero lo malo es que al desabiltar la << 2) >>, se pierde la cartacterística que permite
+que al hacer Control + Mouse Over, no se seleccionan las palabras claves o palabras recervadas para
+ver de dónde provienen, Y eso es una gran desventaja, a la hora de estar programando.
+
+
+Nota 1: en el video muestra cómo configurar las notificaciones, tanto para android como
+para ios; pero en este caso, sólo se configuró para android, dejando ese proceso faltante
+para futuras compilaciones ya para ios.
+
+Nota 2: En el video utilizan Android Studio para configurar todo el proceso 
+ que implica utilizar firebase, en cuanto a configuraciones de gradle; pero yo pude 
+utilizar vs-code, en su lugar, ejecutando << npx react-native run-android >>, cada vez 
+que configuraba algo que debía ser sincronizado desde android studio, y todo salió bien.
+
+El código mostrado en el video, está también disponible en github:
+https://github.com/tranhonghan/RNFirebase
+
+
+
+
+-------------------------- 39 ------------------------
+
+instalando paquetería Firebase Nueva Versión, 
+para las notificaciones push
+
+(Las siguientes instalaciones son las que sugiere un video guía,
+   y se instalan previo al video para ahorrar ese paso)
+
+
+> npm install --save @react-native-firebase/app@11.5.0
+
+*** Version instalada:  + @reac@react-native-firebase/app@11.5.0 # estaba la 12.1.0 pero bajé para intentar repar un problema con adMob pero no se puedo, pero la 11.5.0 sí funciona
+
+
+también instalar:
+
+>  npm install @react-native-firebase/messaging
+
+*** Version instalada: + @react-native-firebase/messaging@11.5.0 # al parecer la 11.5.0 da error
+
+y adenás instalar:
+
+> npm install react-native-push-notification
+
+*** Version instalada: + react-native-push-notification@7.3.1
+
+Dado que en la programación de lo métodos que se usan para implementar firebase
+se encuentran condiciones donde toman  encuenta a IOS, se debe instalar esta paquetería:
+
+> npm install @react-native-community/push-notification-ios
+
+*** Version instalada: + @react-native-community/push-notification-ios@1.8.0
+
+Video instructivo, url:
+https://www.youtube.com/watch?fbclid=IwAR3eW8HOR1fBSTXBMcQUqCN0lTM1ASYttNv6p8l82jXwc821MXLjMYXVhjs&v=dyAwv9HLS60&feature=youtu.be
+
+Nota: Para configurar, esto, se debe ver el video y seguir los pasos ahí descritos.
+
+El código mostrado en el video, está también disponible en github:
+https://github.com/tranhonghan/RNFirebaseV7?fbclid=IwAR1SY8hVpsuIPGLgz05g6w29ppoVD2_MrGITGtSHC0IIC1jRjLdY5cWOKmM
+
+
+Nota: en el video usan la versión de firebase: @7.0.1
+
+AL ocurrir el error: 
+> Task :app:multiDexListRelease FAILED
+Limpiar el proyecto de todas las formas posibles
+Apagar el pc y volver a encender
+
+
+Nota: para solventar el problema de que la app, al recibir el recibir un firebase message, ésta ejecuta
+       nuevamente otra instancia haciendo ver como si hubiesen dos apps iguales corriendo una sobre otra
+      en pantalla:  ir a   android/app/src/main/AndroidManifest    y agregar lo siguiente dentro del activity principal:
+
+     <activity
+         ...
+          android:launchMode="singleTask"
+      ...
+    >
+
+
+** Este problema se trata en el problema 14 de github y hay solución por
+      el usuario whenmoon:
+Url: https://github.com/notifee/react-native-notifee/issues/14
+
+-----------------------39.2 (incluido en himanrio app, NO FUNCIONA, YA NO TOMAR EN CUENTA) ----------------------
+
+Continunado con firebase para configurar Google AdMob
+
+> npm install @react-native-firebase/admob
+
+*** Version instalada: + @react-native-firebase/admob@11.5.0
+
+Then, create firebase.json within the root directory of the React Native app, 
+paste the code below to configure, and link your app to your AdMob account:
+
+{
+  "react-native": {
+  "admob_android_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx",
+  "admob_ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx"
+}
+}
+
+Replace the admob_android_app_id 
+and 
+admob_ios_app_id value 
+with your appropriate app IDs.
+
+
+
+---------------------------- 40 -------------------------
+
+Para usar una versión más actualizada de AsyncStorage,
+almacenage local:
+
+> npm install @react-native-async-storage/async-storage
+
+*** Version instalada: + @react-native-async-storage/async-storage@1.14.1
+
+
+
+
+----------------------------------- 41 ----------------------------
+
+Para Soporte GIF en Android, para animaciones, especialmente utilizando
+para el el gif del inicio, el que tiene la palabra AwsomeProject. 
+
+Al crear su propio código nativo, GIF y WebP no son compatibles de forma 
+predeterminada en Android. Deberá agregar algunos módulos opcionales 
+en android/app/build.gradle, según las necesidades de su aplicación:
+
+Por lo tanto agregamos  lo siguiente:
+
+ // If your app supports Android versions before Ice Cream Sandwich (API level 14)
+  implementation 'com.facebook.fresco:animated-base-support:1.3.0'
+
+  // For animated GIF support
+  implementation 'com.facebook.fresco:animated-gif:2.0.0'
+
+
+------------------------------- 42 --------------------
+( No instalar)
+Para reproducir audio, usado en la pantalla de favoritos
+al precionar el botón para indicar que se asistirá a un evento
+
+> npm install react-native-sound --save
+
+*** Version instalada: + react-native-sound@0.11.0
+
+
+
+--------------------------------- 43 -----------------------
+(No instalar)
+Animación de confetti para el area de Acerca
+
+> npm install react-native-confetti-cannon
+
+*** Version instalada:  + react-native-confetti-cannon@1.5.1
+
+
+
+
+----------------------------- 44 -------------------------
+
+Para poder utilizar el GPS en react-native-maps,
+ e incluso poder obtener las coordenadas Latitude y Longitude
+
+> npm install @react-native-community/geolocation --save
+
+*** Version instalada:  + @react-native-community/geolocation@2.0.2
+
+
+***********
+
+Documentación y recursos:
+
+Donde se muestra cómo incrustar GPS, pero hay un error de desface:
+
+1- https://www.youtube.com/watch?v=Zk2JK4tj1Fs
+
+Y en Stackoverflow un miembro llamado Sandip Singh da la solución: 
+
+2- https://stackoverflow.com/questions/47334159/react-native-navigator-geolocation-getcurrentposition-not-working
+
+*************
+
+
+
+
+----------------------------- 45 -------------------------
+
+Para encriptar la contraseña en el formulario
+
+> npm install react-native-sha256
+
+*** Version instalada:  + react-native-sha256@1.4.7
+
+
+----------------------- 46 ----------------------------
+
+Para activar desde la aplicación la localización del dispositivo
+
+> npm install react-native-android-location-enabler --save
+
+*** Version instalada:  + react-native-android-location-enabler@1.2.2
+
+***Nota: esta paquetería hace una descarga automática para su función; lo hace
+         al momento de depurar
+
+
+
+
+ -------------- 47 -------------------- a partir de aquí, más packs para proyecto joven --- also to Himnario
+
+ para renombrar un proyecto, renombrar la app
+Instalado de manera global
+> npm install react-native-rename -g
+
+Modo de uso: Cambiar el nombre principal de la capeta de interés,
+luego ejecutar el comando 
+
+> react-native-rename newName
+
+¡Listo!
+
+nota: probablemente no se registre el packaje.json 
+porque es paquetería global
+
+ ----------------------- 48 ----------------------------
+
+Para Mostrar un GridView en pantalla Principal
+
+> npm install react-native-super-grid
+
+*** Version instalada:  + react-native-super-grid@4.1.3
+
+
+----------------------- 49 ----------------------------
+
+Para utilizar un estilo de lista con efectos 'lightweight animation'
+
+> npm install react-native-vega-scroll-list --save
+
+*** Version instalada:  + react-native-vega-scroll-list@1.0.0
+
+Documentación:
+https://reactnativeexample.com/a-react-native-flatlist-with-a-lightweight-animation/
+
+
+----------------------- 50 -----------------------
+
+Para la parte del nuevo login:
+
+> npm i react-native-status-bar-height
+
+*** Version instalada:  + react-native-status-bar-height@2.6.0
+
+
+----------------------- 51 ----------------------- no para himnario app
+
+Para un ejempplo de CardModal. Plantilla bien desarrollada, 
+que se muestra estilo Lista:
+
+> npm i react-native-navbar
+
+*** Version instalada:   + react-native-navbar@2.1.0
+
+----------------------- 52 -----------------------
+
+Para incluir autenticación de Google para Signup y login
+
+Hay un proceso que seguir...
+por ejemplo a través de una guía aquí:
+https://www.instamobile.io/mobile-development/google-login-react-native-firebase/
+Pero básicamente las librerías a instalar son:
+
+> npm i @react-native-community/google-signin
+
+*** Version instalada: + @react-native-community/google-signin@5.0.0
+
+Nota: Cree un directorio en la raiz del proyecto (según la guía), así: utils/keys.js y
+ guarde el web client id.
+
+ 
+Intalar Firebase auth package
+
+> npm i @react-native-firebase/auth
+
+*** Version instalada: + @react-native-firebase/auth@12.1.0
+
+
+----------------------- 52 -----------------------
+
+Para usar una base de datos interna
+
+> npm i react-native-sqlite-storage 
+
+*** Version instalada: + react-native-sqlite-storage@5.0.0
+
+----------------------- 53 -----------------------
+
+Para descargar archivos en una ruta específica del proyecto
+
+> npm install react-native-fs --save 
+
+*** Version instalada: + react-native-fs@2.18.0
+
+----------------------- 54 -----------------------
+
+Para utilizar una barra de progreso en la descarga 
+del archivo de base de datos sqlite, se usa también una
+librería extra
+
+> npm install react-native-progress --save 
+
+*** Version instalada: + react-native-progress@5.0.0
+
+> npm i react-native-svg
+
+*** Version instalada: + react-native-svg@12.1.1
+
+
+----------------------- 54 -----------------------
+
+Para utilizar un carrousel de imágenes y pasarle en
+lugar de ellas, el texto de las alabanzas
+
+(1)
+
+> npm install --save react-native-snap-carousel
+
+*** Version instalada: + react-native-snap-carousel@3.9.1
+
+(2)
+
+> npm install react-native-anchor-carousel
+
+*** Version instalada: + react-native-anchor-carousel@4.0.1
+
+
+----------------------- 55 -----------------------
+
+Para utilizar un botón flotante con más botones
+de control
+
+(1) (ya no instalar)
+
+> npm i react-native-action-button
+
+*** Version instalada: + react-native-action-button@2.8.5
+
+(2)
+
+> npm i react-native-floating-action
+
+*** Version instalada: + react-native-floating-action@1.22.0
+
+
+
+----------------------- 56 -----------------------
+
+Para utilizar un botón de control deslizante
+
+(ya no instalar)
+
+> npm install @material-ui/core
+
+*** Version instalada: + @material-ui/core@4.12.3
+
+
+----------------------- 57 -----------------------
+
+Para intentar impedir que se auto apague la pantalla
+en el modo presentación
+
+> npm install --save react-native-keep-awake
+
+*** Version instalada: + react-native-keep-awake@4.0.0
+
+
+----------------------- 58 -----------------------
+
+Para utilizar base de datos de firebase: Cloud Firestore
+
+> npm install @react-native-firebase/firestore
+
+*** Version instalada: + @react-native-firebase/firestore@14.7.0
+*** Version instalada: + @react-native-firebase/firestore@14.9.1
+
+---------------- run on devices -------------------
+
+Para correr finalmente la app en un dispositivo android
+
+Conectado con cable USB:
+
+  -- Abrir un terminal, ya sea CMD y navegar hasta el proyecto o bien abrirla 
+    desde el mismo vs-code con el proyecto abierto, haciendo Ctrl + J
+
+  -- Conectar dispositivo con cable usb, em modo Debug
+
+  -- Ejecutar lo siguiente
+    > npx react-native run-android
+
+  La app correrá en el dispositivo, puede conectar varios dispositivos a la vez
+
+Conectado con WiFi:
+
+ -- Nota: Antes de realizar los pasos siguientes deberá haber corrido la app
+          siguiendo los pasos anteriores.
+
+  -- Asegúrese de conectar el movil y el pc en la misma red
+
+  -- Obtenga la dirección ip ejecutando en consola el comando ipconfig
+    La ip podría ser por ejemplo 192.168.43.1
+
+  -- Ejecute en consola lo siguiente
+      > npx react-native start
+
+  -- Con su aplicación abierta, agite el dispositivo hasta que vea el menú de desarrollador.
+
+  -- Vaya a "Configuración de desarrollador".
+
+  -- Ahora vaya a "Puerto y host del servidor de depuración para el dispositivo".
+
+  -- Escriba la dirección IP de su máquina y el puerto del servidor de desarrollo 
+      local (por ejemplo, 192.168.43.19:8081).
+
+  -- Regrese al menú Desarrollador y seleccione Recargar.
+
+  -- Si el proceso falla, tiene que deshabilitar el firewal, luego 
+      conéctate de nuevo, funcionará bien
+
+ -- Si desabilita el firewal, luego de establecer una conexión exitosa, puede volver a activarlo
+     y ya no experimentará bloqueo
+
+ -- Nota: 
+
+           A veces resulta mejor realizar estos pasos con un dispositivo a la vez, en caso de querer 
+           probar conetar varios dispositivos mientras programa. ¡Sí funciona! pero es 
+            preferible que configure los demás dispositivos luego de haber corrido en uno primero.
+           
+            Fíjese de no tener corriendo el servidor local Xamp o Wamp, sí es así deténgalo
+              porque debido a eso se suele cortar la conexión. 
+
+
+
