@@ -38,7 +38,7 @@ import {useNavigation} from '@react-navigation/native';
     const { navigation } = this.props;
     // const { myToken } = this.state;
 
-        console.log("Here un Token: " + this.state.MyToken);
+        console.log("Here un Token  : " + this.state.MyToken);
 
         if(this.state.MyToken!=null){
           //  navigation.reset({ routes: [{name: 'Home'}] })
