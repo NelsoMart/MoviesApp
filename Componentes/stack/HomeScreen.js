@@ -8,8 +8,6 @@ import ErrorDeConexion from '../ErrorDeConexion';
 
 import Lottie from 'lottie-react-native';
   import cancelledOnCanlendar from '../../Lotti_JSON_files/cancelled-event-on-canlendar';
-  import avionAnimation from '../../Lotti_JSON_files/avionAnimation';
-  import forPointAnimation from '../../Lotti_JSON_files/forPointAnimation';
   import movie_theatre from '../../Lotti_JSON_files/34590-movie-theatre.json';    
 
 import { useNavigation } from '@react-navigation/native'; 
@@ -189,7 +187,7 @@ class MoviesList extends PureComponent {
         }; 
         
         
-        Go_toDetailScreen (id, backdrop_path, title, overview, release_date, vote_average, navigation, ) {
+        Go_toDetailScreen (id, backdrop_path, title, overview, release_date, vote_average, genre_ids, navigation, ) {
            if (this.state.connection_Status == 'Offline'){
        
              Alert.alert(' ', 'You can\'t access movie description offline')
@@ -203,6 +201,7 @@ class MoviesList extends PureComponent {
              overview:overview,
              release_date:release_date,
              vote_average:vote_average,
+             genre_ids:genre_ids,
            })
        
          }
@@ -256,6 +255,7 @@ class MoviesList extends PureComponent {
                   item.overview,
                   item.release_date,
                   item.vote_average,
+                  item.genre_ids,
                   navigation )}
               style ={{flex:1, flexDirection: 'row', /*marginBottom: 3,margin: 5*/ }}
             >
@@ -263,24 +263,24 @@ class MoviesList extends PureComponent {
             
                 <ImageBackground source={require('../../assets/img_load.jpg')} 
                                         style={styles.image} >
-                    <Image //!Imagen 
+                    <Image //!
                     source={ {uri: pat_image+item.backdrop_path} } style = {styles.image}/>
                 </ImageBackground>
                   
         
                 <View style={{ flex:1, justifyContent: 'center', marginLeft: 10}}>
 
-                    <Text //! Nombre
+                    <Text //! 
                         style={[styles.nombre, {color: '#218242'}]} >
                       {item.title}
                     </Text>
 
-                    <Text //! Fecha
+                    <Text //! 
                         style={{color:'darkblue', fontSize: 16}} >
                       Release Date: {item.release_date }
                     </Text>
                   
-                  <Text //! Hora
+                  <Text //!
                   style={{color:'gold', fontSize: 16}}>
                     The Average vote: {item.vote_average}
                   </Text>
@@ -387,7 +387,7 @@ class MoviesList extends PureComponent {
               }}>
 
             <Lottie resizeMode= "contain" style={{width:700, height: 120}} 
-                autoSize source={forPointAnimation} autoPlay loop />
+                autoSize source={movie_theatre} autoPlay loop />
                 
             <Text style = {{color:'gray', fontFamily: 'Arial',
                             fontWeight:'bold', fontSize: 19}}>
@@ -417,7 +417,7 @@ class MoviesList extends PureComponent {
 
         {
 
-          DefaultSpinner == true ? //* debe ir este lotie por si la lista está vacía
+          DefaultSpinner == true ?
           <View style= {{backgroundColor: '#F8F9F9'}}>
             <Lottie  style={{alignItems: "center", alignSelf: "center", alignContent: "center", height: "70%"}}
                               autoSize source={movie_theatre} autoPlay loop />
@@ -435,9 +435,7 @@ class MoviesList extends PureComponent {
 
           <Text style={{color:'#566573', 
                           textAlign: 'center', fontSize: 18, paddingTop: 20}}>
-                Por ahora no hay eventos en Sonsonate; pero regresa aquí con 
-                frecuencia, porque pronto habrán muchos eventos que, seguro,
-                no querrás perderte. 
+               Movies List is Empty
           </Text>
       
 

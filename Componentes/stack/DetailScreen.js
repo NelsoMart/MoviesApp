@@ -21,6 +21,7 @@ export default function DetailScreen({route}) {
   const {overview} = route.params;
   const {release_date} = route.params;
   const {vote_average} = route.params;
+  const {genre_ids} = route.params;
 
   let pat_image = "https://image.tmdb.org/t/p/w200";
 
