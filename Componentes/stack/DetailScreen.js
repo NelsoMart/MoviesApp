@@ -7,11 +7,13 @@ import {
   ScrollView,
   SafeAreaView,
   StyleSheet,
-  FlatList
+  FlatList,
+  ToastAndroid
 } from 'react-native';
 
 
 import {useNavigation} from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function DetailScreen({route}) {
 
@@ -34,7 +36,9 @@ export default function DetailScreen({route}) {
   const [data, setData] = useState([])
 
   const fetchData = async () => {
-    return fetch('https://api.themoviedb.org/3/discover/movie?api_key=852f0cc2950393b0017a359bafdec870&language=en-US&page=1&primary_release_year=2022&with_genres=28')
+    // return fetch('https://api.themoviedb.org/3/discover/movie?api_key=852f0cc2950393b0017a359bafdec870&language=en-US&page=1&primary_release_year=2022&with_genres=28')
+    return fetch(`https://api.themoviedb.org/3/discover/movie?api_key=852f0cc2950393b0017a359bafdec870&language=en-US&page=1&primary_release_year=2022&with_genres=${genre_ids}`)
+
     .then((response) => response.json())
     .then((json) => {
         // return json.movies;
@@ -50,18 +54,26 @@ export default function DetailScreen({route}) {
       });
   };
 
+  const timeout = ()=>{
+    ToastAndroid.show( ";)", ToastAndroid.LONG)
+
+  }
+
   const renderPhoto = ({ item, index }) => {
 
     let pat_image = "https://image.tmdb.org/t/p/w200";
     return (
-        <View style = {{ width: 100, height: 'auto', 
+        <View style = {{ width: 200, height: 300, 
           flexDirection:'row'}}>
+          <TouchableOpacity onPress={()=>timeout()}>
           <Image 
-            style = { {width: 50, height: 50} }
+            style = { {width: 200, height: 200} }
             // resizeMode = { FastImage.resizeMode.contain }
             source = {{ uri: pat_image+item.poster_path }}
           /> 
           {itemSeparatorComponent()}
+          </TouchableOpacity>
+          
         </View>
     )}
 
@@ -70,7 +82,7 @@ export default function DetailScreen({route}) {
           {
               height: '100%',
               width: 5,
-              backgroundColor: 'red',
+              backgroundColor: 'lightgray',
           }
       }
       />
@@ -95,7 +107,10 @@ export default function DetailScreen({route}) {
                 <Text style={styles.description}>{overview}</Text>
               </View>
 
-              <View>
+            <View style={{margin: 10}}>
+              <Text>Anothers</Text>
+            </View>
+              <View style={{flex: 1, alignContent: 'center', justifyContent: 'center',}}>
               <FlatList
                 horizontal
                 pagingEnabled={true}
@@ -104,7 +119,7 @@ export default function DetailScreen({route}) {
                 data={data}
                 renderItem={item => renderPhoto(item)}
                 keyExtractor={photo => photo.id}
-                style={{width: 80, height:'100%'}}
+                style={{width: '100%', height:'100%'}}
               />
               </View>
             </ScrollView>
