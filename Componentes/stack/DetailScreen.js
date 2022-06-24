@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   Image,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   StyleSheet,
+  FlatList
 } from 'react-native';
 
 
@@ -29,24 +30,51 @@ export default function DetailScreen({route}) {
     fetchData();
   }, []);
 
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
+  const [data, setData] = useState([])
 
   const fetchData = async () => {
     return fetch('https://api.themoviedb.org/3/discover/movie?api_key=852f0cc2950393b0017a359bafdec870&language=en-US&page=1&primary_release_year=2022&with_genres=28')
-      .then(response => response.json())
-      .then(json => {
+    .then((response) => response.json())
+    .then((json) => {
         // return json.movies;
 
         // let MyJson = Array.from(json);
-        let MyJson = Object.values(json)
-        // setData(MyJson);
+        // let MyJson = Object.values(json.results)
+        setData(json.results);
         // console.error(MyJson);
-        console.log(MyJson);
+        // console.log(MyJson);
       })
       .catch(error => {
         console.error(error);
       });
   };
+
+  const renderPhoto = ({ item, index }) => {
+
+    let pat_image = "https://image.tmdb.org/t/p/w200";
+    return (
+        <View style = {{ width: 100, height: 'auto', 
+          flexDirection:'row'}}>
+          <Image 
+            style = { {width: 50, height: 50} }
+            // resizeMode = { FastImage.resizeMode.contain }
+            source = {{ uri: pat_image+item.poster_path }}
+          /> 
+          {itemSeparatorComponent()}
+        </View>
+    )}
+
+    const itemSeparatorComponent = () => {
+      return <View style = {
+          {
+              height: '100%',
+              width: 5,
+              backgroundColor: 'red',
+          }
+      }
+      />
+      }
 
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
@@ -65,6 +93,19 @@ export default function DetailScreen({route}) {
                 
                 <Text style={styles.description0}>Overview:</Text>
                 <Text style={styles.description}>{overview}</Text>
+              </View>
+
+              <View>
+              <FlatList
+                horizontal
+                pagingEnabled={true}
+                showsHorizontalScrollIndicator={false}
+                legacyImplementation={false}
+                data={data}
+                renderItem={item => renderPhoto(item)}
+                keyExtractor={photo => photo.id}
+                style={{width: 80, height:'100%'}}
+              />
               </View>
             </ScrollView>
           </SafeAreaView>
