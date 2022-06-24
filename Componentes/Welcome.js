@@ -38,20 +38,20 @@ import {useNavigation} from '@react-navigation/native';
     const { navigation } = this.props;
     // const { myToken } = this.state;
 
-        console.log("Here un Token  : " + this.state.MyToken);
+        console.log("Here Token: " + this.state.MyToken);
 
         if(this.state.MyToken!=null){
-          //  navigation.reset({ routes: [{name: 'Home'}] })
+           navigation.reset({ routes: [{name: 'Home'}] })
         } 
         else{
-          // navigation.reset({ routes: [{name: 'LoginScreen'}] })
+          navigation.reset({ routes: [{name: 'LoginScreen'}] })
         }
    }
 
    componentDidMount(){
     setTimeout(() => {
         this.switchNaviation();
-    }, 900)
+    }, 1000)
    }
 
   render(){

@@ -31,7 +31,7 @@ export default function DetailScreen({route}) {
   const navigation = useNavigation(); 
 
   const fetchData = async () => {
-    return fetch('http://api.themoviedb.org/3/movie/361743?api_key=852f0cc2950393b0017a359bafdec870')
+    return fetch('https://api.themoviedb.org/3/discover/movie?api_key=852f0cc2950393b0017a359bafdec870&language=en-US&page=1&primary_release_year=2022&with_genres=28')
       .then(response => response.json())
       .then(json => {
         // return json.movies;
