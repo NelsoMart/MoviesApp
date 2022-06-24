@@ -9,7 +9,8 @@ import ErrorDeConexion from '../ErrorDeConexion';
 import Lottie from 'lottie-react-native';
   import cancelledOnCanlendar from '../../Lotti_JSON_files/cancelled-event-on-canlendar';
   import avionAnimation from '../../Lotti_JSON_files/avionAnimation';
-  import forPointAnimation from '../../Lotti_JSON_files/forPointAnimation';    
+  import forPointAnimation from '../../Lotti_JSON_files/forPointAnimation';
+  import movie_theatre from '../../Lotti_JSON_files/34590-movie-theatre.json';    
 
 import { useNavigation } from '@react-navigation/native'; 
 
@@ -418,8 +419,8 @@ class MoviesList extends PureComponent {
 
           DefaultSpinner == true ? //* debe ir este lotie por si la lista está vacía
           <View style= {{backgroundColor: '#F8F9F9'}}>
-            <Lottie  style={{alignItems: "center", alignSelf: "center", alignContent: "center", height: "100%"}}
-                              autoSize source={avionAnimation} autoPlay loop />
+            <Lottie  style={{alignItems: "center", alignSelf: "center", alignContent: "center", height: "70%"}}
+                              autoSize source={movie_theatre} autoPlay loop />
           </View>
         
           :
